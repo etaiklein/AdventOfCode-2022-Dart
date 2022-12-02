@@ -47,8 +47,3 @@ class Day01 extends GenericDay {
     return top3sum;
   }
 }
-
-void main() {
-  print(Day01().solvePart1());
-  print(Day01().solvePart2());
-}

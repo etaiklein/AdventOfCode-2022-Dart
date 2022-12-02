@@ -36,7 +36,6 @@ class Day02 extends GenericDay {
         print("missing scoremap entry");
       }
     }
-    print(score);
     return score;
   }
 
@@ -68,12 +67,6 @@ class Day02 extends GenericDay {
         print("missing scoremap entry");
       }
     }
-    print(score);
     return score;
   }
 }
-
-void main() {
-  Day02().printSolutions();
-}
-
