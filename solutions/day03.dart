@@ -12,6 +12,10 @@ class Day03 extends GenericDay {
     return c.codeUnitAt(0) - 64 + ((c.toUpperCase() == c) ? 26 : -32);
   }
 
+  Set getCommonElements(list) {
+    return list.fold<dynamic>(list.first.toSet(), (a, b) => a.intersection(b.toSet()));
+  }
+
   @override
   int solvePart1() {
     // test priority helper
@@ -24,9 +28,8 @@ class Day03 extends GenericDay {
 
     // get priority of common elements
     return lines.map((line) {
-      var compartments = [line.split('').sublist(0, (line.length/2).ceil()), line.split('').sublist((line.length/2).ceil(), line.length)];
-      var commonElements = compartments.fold<Set>(compartments.first.toSet(), (a, b) => a.intersection(b.toSet()));
-      return getPriority(commonElements.first);
+      var compartments = [line.split('').sublist(0, line.length ~/ 2), line.split('').sublist(line.length ~/ 2, line.length)];
+      return getPriority(getCommonElements(compartments).first);
     }).toList().reduce(((value, element) => value + element));
   }
 
@@ -43,8 +46,7 @@ class Day03 extends GenericDay {
     // get priority of common elements
     return groups.map((group) {
       var lineSets = group.map((lines) => lines.split('')).toList();
-      var commonElements = lineSets.fold(lineSets.first.toSet(), (a, b) => a.intersection(b.toSet()));
-      return getPriority(commonElements.first);
+      return getPriority(getCommonElements(lineSets).first);
     }).toList().reduce(((value, element) => value + element));
   }
 }
