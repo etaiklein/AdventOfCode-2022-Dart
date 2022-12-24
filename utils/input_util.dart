@@ -13,6 +13,7 @@ class InputUtil {
   static String _createInputPath(int day) {
     String dayString = day.toString().padLeft(2, '0');
     return './input/aoc$dayString.txt';
+    // return './input/aoc$dayString-sample.txt';
   }
 
   static String _readInputDay(int day) {

@@ -13,6 +13,7 @@ final days = <GenericDay>[
   Day08(),
   Day09(),
   Day10(),
+  Day11(),
 ];
 
 void main(List<String?> args) {
@@ -27,9 +28,7 @@ void main(List<String?> args) {
     onlyShowLast = false;
   }
 
-  onlyShowLast
-      ? days.last.printSolutions()
-      : days.forEach((day) => day.printSolutions());
+  onlyShowLast ? days.last.printSolutions() : days.forEach((day) => day.printSolutions());
 }
 
 void printHelper() {
