@@ -6,26 +6,28 @@ class InputUtil {
   final String _inputAsString;
   final List<String> _inputAsList;
 
-  InputUtil(int day)
-      : _inputAsString = _readInputDay(day),
-        _inputAsList = _readInputDayAsList(day);
+  InputUtil(int day, {sample = false})
+      : _inputAsString = _readInputDay(day, sample: sample),
+        _inputAsList = _readInputDayAsList(day, sample: sample);
 
-  static String _createInputPath(int day) {
+  static String _createInputPath(int day, {sample = false}) {
     String dayString = day.toString().padLeft(2, '0');
+    if (sample) {
+      return './input/aoc$dayString-sample.txt';
+    }
     return './input/aoc$dayString.txt';
-    // return './input/aoc$dayString-sample.txt';
   }
 
-  static String _readInputDay(int day) {
-    return _readInput(_createInputPath(day));
+  static String _readInputDay(int day, {sample = false}) {
+    return _readInput(_createInputPath(day, sample: sample));
   }
 
   static String _readInput(String input) {
     return File(input).readAsStringSync();
   }
 
-  static List<String> _readInputDayAsList(int day) {
-    return _readInputAsList(_createInputPath(day));
+  static List<String> _readInputDayAsList(int day, {sample = false}) {
+    return _readInputAsList(_createInputPath(day, sample: sample));
   }
 
   static List<String> _readInputAsList(String input) {

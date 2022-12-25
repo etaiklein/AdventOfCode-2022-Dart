@@ -18,6 +18,9 @@ class Field<T> {
         width = field[0].length;
 
   final List<List<T>> field;
+  Position start = new Position(0, 0);
+  Position end = new Position(0, 0);
+  Position current = new Position(0, 0);
   int height;
   int width;
 
@@ -28,19 +31,13 @@ class Field<T> {
   T getValueAt(int x, int y) => getValueAtPosition(Position(x, y));
 
   /// Sets the value at the given Position.
-  setValueAtPosition(Position position, T value) =>
-      field[position.y][position.x] = value;
+  setValueAtPosition(Position position, T value) => field[position.y][position.x] = value;
 
   /// Sets the value at the given coordinates.
-  setValueAt(int x, int y, T value) =>
-      setValueAtPosition(Position(x, y), value);
+  setValueAt(int x, int y, T value) => setValueAtPosition(Position(x, y), value);
 
   /// Returns whether the given position is inside of this field.
-  bool isOnField(Position position) =>
-      position.x >= 0 &&
-      position.y >= 0 &&
-      position.x < width &&
-      position.y < height;
+  bool isOnField(Position position) => position.x >= 0 && position.y >= 0 && position.x < width && position.y < height;
 
   /// Returns the whole row with given row index.
   Iterable<T> getRow(int row) => field[row];
@@ -64,9 +61,8 @@ class Field<T> {
   }
 
   /// Returns the number of occurances of given object in this field.
-  int count(T searched) => field
-      .expand((element) => element)
-      .fold<int>(0, (acc, elem) => elem == searched ? acc + 1 : acc);
+  int count(T searched) =>
+      field.expand((element) => element).fold<int>(0, (acc, elem) => elem == searched ? acc + 1 : acc);
 
   /// Executes the given callback for all given positions.
   forPositions(
@@ -84,8 +80,7 @@ class Field<T> {
       Position(x, y + 1),
       Position(x - 1, y),
       Position(x + 1, y),
-    }..removeWhere(
-        (pos) => pos.x < 0 || pos.y < 0 || pos.x >= width || pos.y >= height);
+    }..removeWhere((pos) => pos.x < 0 || pos.y < 0 || pos.x >= width || pos.y >= height);
   }
 
   /// Returns all positional neighbours of a point. This includes the adjacent
@@ -101,8 +96,7 @@ class Field<T> {
       Position(x - 1, y + 1),
       Position(x - 1, y),
       Position(x - 1, y - 1),
-    }..removeWhere(
-        (pos) => pos.x < 0 || pos.y < 0 || pos.x >= width || pos.y >= height);
+    }..removeWhere((pos) => pos.x < 0 || pos.y < 0 || pos.x >= width || pos.y >= height);
   }
 
   /// Returns a deep copy by value of this [Field].
@@ -123,6 +117,7 @@ class Field<T> {
       }
       result += '\n';
     }
+    result += '\nStart: ${start}\nCurrent: ${current}\nEnd: ${end}\n';
     return result;
   }
 }
@@ -135,10 +130,7 @@ extension IntegerField on Field<int> {
   /// Convenience method to create a Field from a single String, where the
   /// String is a "block" of integers.
   static Field<int> fromString(String string) {
-    final lines = string
-        .split('\n')
-        .map((line) => line.trim().split('').map(int.parse).toList())
-        .toList();
+    final lines = string.split('\n').map((line) => line.trim().split('').map(int.parse).toList()).toList();
     return Field(lines);
   }
 }
